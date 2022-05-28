@@ -1,0 +1,170 @@
+<!-- <app-child1>
+  <app-child2 *ngFor="let item of brands">{{ item }}</app-child2>
+</app-child1> -->
+
+<!-- <main>
+  <h4>Formularz TEMPLATE-DRIVEN</h4>
+  <form>
+    <p>
+      <label>Imię </label>
+      <input placeholder="Wprowadź imię" type="text" [(ngModel)]="osoba.imie" name="imie">
+    </p>
+    <p>
+      <label>Nazwisko </label>
+      <input placeholder="Wprowadź nazwisko" type="text" [(ngModel)]="osoba.nazwisko" name="nazwisko">
+    </p>
+    <p>
+      <label>E-mail </label>
+      <input placeholder="Wprowadź adres email" type="email" [(ngModel)]="osoba.adresEmail" name="adresEmail">
+    </p>
+    <p>
+      <textarea placeholder="Opis..." style="width: 240px;" type="text-area" [(ngModel)]="osoba.opis" name="opis">
+            </textarea>
+    </p>
+    <p>
+      <label>Dzień tygodnia </label>
+      <select name="dzień" title="Dzień tygodnia" style="width: 100px;" [(ngModel)]="osoba.dniTygodnia">
+        <option *ngFor="let item of dzienTygodnia" [ngValue]="item">{{ item }}</option>
+      </select>
+    </p>
+    <p>
+      <label>Wiek </label>
+      <select name="wiek" title="Wiek osoby" style="width: 100px;" [(ngModel)]="osoba.wiek">
+        <option *ngFor="let item of wiek" [ngValue]="item">{{ item }}</option>
+      </select>
+    </p>
+    <p class="checkbox">
+      <label>
+        <input name="checkbox" [(ngModel)]="osoba.czyStudent" type="checkbox" data-toggle="toggle"> Czy Student
+      </label>
+    </p>
+    <p>
+      <input type="radio" value="male" name="gender" [(ngModel)]="osoba.gender"> Mężczyzna
+      <input type="radio" value="female" name="gender" [(ngModel)]="osoba.gender"> Kobieta
+    </p>
+    <button (click)="sendForm()">Wyślij formularz</button>
+  </form>
+</main> -->
+
+<!-- <main>
+  <h4>Formularz TEMPLATE-DRIVEN</h4>
+  <form #osobaForm="ngForm" (ngSubmit)="send()">
+    <div>
+      <label>Imię </label>
+      <input placeholder="Wprowadź imię" id="imie" type="text" [(ngModel)]="osoba.imie" name="imie" [required]="true"
+        minlength="3" #imie="ngModel" (input)="imieChanged(imie)">
+      <ng-container *ngIf="imie.invalid && imie.touched">
+        <div class="valid-errors" *ngIf="imie.errors ['required']">To pole jest wymagane!</div>
+        <div class="valid-errors" *ngIf="imie.errors ['minlength']">Imię jest za krótkie.</div>
+      </ng-container>
+    </div>
+    <div>
+      <label>Nazwisko </label>
+      <input placeholder="Wprowadź nazwisko" type="text" [(ngModel)]="osoba.nazwisko" name="nazwisko" [required]="true" 
+      minlength="5" #nazwisko="ngModel" (input)="nazwiskoChanged(nazwisko)">
+      <ng-container *ngIf="nazwisko.invalid && nazwisko.touched">
+        <div class="valid-errors" *ngIf="nazwisko.errors ['required']">To pole jest wymagane!</div>
+        <div class="valid-errors" *ngIf="nazwisko.errors ['minlength']">Nazwisko jest za krótkie.</div>
+      </ng-container>
+    </div>
+    <div>
+      <label>Email </label>
+      <input placeholder="Wprowadź email" type="email" [(ngModel)]="osoba.adresEmail" name="email" [required]="true"
+        email #email="ngModel">
+      <ng-container *ngIf="email.invalid && email.touched">
+        <div class="valid-errors" *ngIf="email.errors ['required']">To pole jest wymagane!</div>
+        <div class="valid-errors" *ngIf="email.errors ['email']">Tekst nie jest adresem email.</div>
+      </ng-container>
+    </div>
+    <div>
+      <label>Wiek </label>
+      <select name="wiek" title="Wiek osoby" style="width: 100px;" [required]="true" [(ngModel)]="osoba.wiek">
+        <option *ngFor="let item of wiek" [ngValue]="item">{{ item }}</option>
+      </select>
+    </div>
+    <div>
+      <label>
+        <input name="checkbox" [(ngModel)]="osoba.czyStudent" type="checkbox" data-toggle="toggle">Czy Student
+      </label>
+    </div>
+    <div>
+      <input type="radio" value="male" name="gender" [(ngModel)]="osoba.gender"> Mężczyzna
+      <input type="radio" value="female" name="gender" [(ngModel)]="osoba.gender"> Kobieta
+    </div>
+    <button type="submit" [disabled]="osobaForm.invalid">Send</button>
+    <button type="submit">Send</button>
+    <button type="reset">Reset</button>
+    <button type="button" (click)="sendForm()">Button</button>
+    <button (click)="sendForm()">Wyślij formularz</button>
+  </form>
+</main> -->
+
+<main>
+  <h4>Formularz REACTIVE-FORM</h4>
+  <form [formGroup]="osobaForm" (ngSubmit)="onSubmit()">
+    <label>Imię </label>
+    <input placeholder="Wprowadź imię" type="text" minlength="3" formControlName="imie">
+    <div *ngIf="osobaForm.get('imie').errors?.['minlength']" [ngStyle]="{ color: 'red' }">
+      Tekst jest za krótki!
+    </div>
+    <div *ngIf="osobaForm.get('imie').errors?.['required'] && osobaForm.get('imie').touched"
+      [ngStyle]="{ color: 'red' }">
+      To pole jest wymagane!
+    </div>
+    <div>
+      <label>Nazwisko </label>
+      <input placeholder="Wprowadź nazwisko" type="text" [formControlName]="'nazwisko'">
+    </div>
+
+    <div>
+      <label>Data urodzenia </label>
+      <input placeholder="Wprowadź datę urodzenia" type="text" formControlName="dob">
+      <div *ngIf="osobaForm.get('dob').errors?.['required'] && osobaForm.get('dob').touched"
+        [ngStyle]="{ color: 'red' }">
+        Data urodzenia jest wymagana!</div>
+    </div>
+
+    <div>
+      <label>Stanowisko </label>
+      <input placeholder="Podaj Swoje stanowisko pracy" type="text" formControlName="stanowisko">
+      <div *ngIf="osobaForm.get('stanowisko').errors?.['required'] && osobaForm.get('stanowisko').touched"
+        [ngStyle]="{ color: 'red' }">
+        Stanowisko jest wymagane!</div>
+    </div>
+
+    <div>
+      <label>Email </label>
+      <input placeholder="Wprowadź email" type="email" [formControlName]="EMAIL">
+      <div *ngIf="osobaForm.get('email').errors?.['required'] && osobaForm.get('email').touched"
+        [ngStyle]="{ color: 'red' }">
+        To pole jest wymagane!
+      </div>
+    </div>
+    <div *ngIf="osobaForm.get('email').errors?.['email'] && osobaForm.get('email').dirty" [ngStyle]="{ color: 'red' }">
+      Zły adres email!
+    </div>
+    <div>
+      <textarea placeholder="Opis..." style="width: 240px;" type="text-area" formControlName="opis">
+      </textarea>
+    </div>
+    <div>
+      <label>Wiek </label>
+      <select formControlName="wiek" title="Wiek osoby" style="width: 177px;">
+        <option *ngFor="let item of wiek" [ngValue]="item">{{item}}</option>
+      </select>
+    </div>
+    <div>
+      <label>
+        <input formControlName="checkbox" type="checkbox" formControlName="czyStudent">Czy Student
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label" for="gender">Płeć? </label> <br> 
+      <input class="form-check-input" type="radio" [value]="true" formControlName="gender"> Mężczyzna 
+      <input class="form-check-input" type="radio" [value]="false" formControlName="gender"> Kobieta
+    </div>
+    <button type="submit">Send</button>
+    <button type="submit" [disabled]="osobaForm.invalid">Send</button>
+    <button type="reset">Reset</button>
+  </form>
+</main>
