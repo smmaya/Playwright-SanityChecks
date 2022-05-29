@@ -101,70 +101,129 @@
 
 <main>
   <h4>Formularz REACTIVE-FORM</h4>
-  <form [formGroup]="osobaForm" (ngSubmit)="onSubmit()">
-    <label>Imię </label>
-    <input placeholder="Wprowadź imię" type="text" minlength="3" formControlName="imie">
-    <div *ngIf="osobaForm.get('imie').errors?.['minlength']" [ngStyle]="{ color: 'red' }">
-      Tekst jest za krótki!
-    </div>
-    <div *ngIf="osobaForm.get('imie').errors?.['required'] && osobaForm.get('imie').touched"
-      [ngStyle]="{ color: 'red' }">
-      To pole jest wymagane!
-    </div>
-    <div>
-      <label>Nazwisko </label>
-      <input placeholder="Wprowadź nazwisko" type="text" [formControlName]="'nazwisko'">
-    </div>
+  <form class="form-group" [formGroup]="osobaForm" (ngSubmit)="onSubmit()">
+    <div class="container justify-content-center mt-4">
+      <div class="row justify-content-center m-0">
+        <div class="col-6 text-end">
+          <label class="form-control border-0">Imię:</label>
+        </div>
+        <div class="col-6">
+          <input class="form-control" placeholder="Wprowadź imię" type="text" minlength="3" formControlName="imie">
+          <div *ngIf="osobaForm.get('imie').errors?.['minlength']" [ngStyle]="{ color: 'red' }">
+            Tekst jest za krótki!
+          </div>
+          <div *ngIf="osobaForm.get('imie').errors?.['required'] && osobaForm.get('imie').touched"
+            [ngStyle]="{ color: 'red' }">
+            To pole jest wymagane!
+          </div>
+        </div>
+        <div class="row justify-content-center m-0">
+          <div class="col-6 text-end">
+            <label class="form-control border-0">Nazwisko:</label>
+          </div>
+          <div class="col-6">
+            <input class="form-control" placeholder="Wprowadź nazwisko" type="text" [formControlName]="'nazwisko'">
+          </div>
+        </div>
 
-    <div>
-      <label>Data urodzenia </label>
-      <input placeholder="Wprowadź datę urodzenia" type="text" formControlName="dob">
-      <div *ngIf="osobaForm.get('dob').errors?.['required'] && osobaForm.get('dob').touched"
-        [ngStyle]="{ color: 'red' }">
-        Data urodzenia jest wymagana!</div>
-    </div>
+        <div class="row justify-content-center m-0">
+          <div class="col-6 text-end">
+            <label class="form-control border-0">Data urodzenia:</label>
+          </div>
+          <div class="col-6">
+            <input class="form-control" placeholder="Wprowadź datę urodzenia" type="text" formControlName="dob">
+            <div *ngIf="osobaForm.get('dob').errors?.['required'] && osobaForm.get('dob').touched"
+              [ngStyle]="{ color: 'red' }">
+              Data urodzenia jest wymagana!</div>
+          </div>
+        </div>
 
-    <div>
-      <label>Stanowisko </label>
-      <input placeholder="Podaj Swoje stanowisko pracy" type="text" formControlName="stanowisko">
-      <div *ngIf="osobaForm.get('stanowisko').errors?.['required'] && osobaForm.get('stanowisko').touched"
-        [ngStyle]="{ color: 'red' }">
-        Stanowisko jest wymagane!</div>
-    </div>
+        <div class="row justify-content-center m-0">
+          <div class="col-6 text-end">
+            <label class="form-control border-0">Stanowisko:</label>
+          </div>
+          <div class="col-6">
+            <input class="form-control" placeholder="Podaj Swoje stanowisko pracy" type="text"
+              formControlName="stanowisko">
+            <div *ngIf="osobaForm.get('stanowisko').errors?.['required'] && osobaForm.get('stanowisko').touched"
+              [ngStyle]="{ color: 'red' }">
+              Stanowisko jest wymagane!</div>
+          </div>
+        </div>
 
-    <div>
-      <label>Email </label>
-      <input placeholder="Wprowadź email" type="email" [formControlName]="EMAIL">
-      <div *ngIf="osobaForm.get('email').errors?.['required'] && osobaForm.get('email').touched"
-        [ngStyle]="{ color: 'red' }">
-        To pole jest wymagane!
+        <div class="row justify-content-center m-0">
+          <div class="col-6 text-end">
+            <label class="form-control border-0">Email:</label>
+          </div>
+          <div class="col-6">
+            <input class="form-control" placeholder="Wprowadź email" type="email" [formControlName]="EMAIL">
+            <div *ngIf="osobaForm.get('email').errors?.['required'] && osobaForm.get('email').touched"
+              [ngStyle]="{ color: 'red' }">
+              To pole jest wymagane!
+            </div>
+          </div>
+          <div *ngIf="osobaForm.get('email').errors?.['email'] && osobaForm.get('email').dirty"
+            [ngStyle]="{ color: 'red' }">
+            Zły adres email!
+          </div>
+        </div>
       </div>
+
+      <div class="row justify-content-center m-0">
+        <div class="col-6 text-end">
+          <label class="form-control border-0">Opis:</label>
+        </div>
+        <div class="col-6">
+          <textarea class="form-control" placeholder="Opis..." style="width: 100%;" type="text-area"
+            formControlName="opis">
+        </textarea>
+        </div>
+      </div>
+
+      <div class="row justify-content-center m-0">
+        <div class="col-6 text-end">
+          <label class="form-control border-0">Wiek:</label>
+        </div>
+        <div class="col-6">
+          <select formControlName="wiek" title="Wiek osoby" style="width: 100%; height: 1.8em;">
+            <option *ngFor="let item of wiek" [ngValue]="item">{{ item }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row justify-content-center m-0">
+        <div class="col-6 text-end mt-1">
+          <input class="form-check-input" formControlName="checkbox" type="checkbox" formControlName="czyStudent">
+        </div>
+        <div class="col-6 text-start">
+          <label class="form-control border-0">Zaznacz jeśli student</label>
+        </div>
+      </div>
+
+      <div class="row justify-content-center m-0">
+        <div class="col-6 text-end">
+          <label class="form-control border-0">Płeć:</label>
+        </div>
+        <div class="col-6 text-start">
+          <div class="mt-1">
+            <input class="form-check-input" type="radio" [value]="true" formControlName="gender"> Mężczyzna
+            <input class="form-check-input" type="radio" [value]="false" formControlName="gender"> Kobieta
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-0">
+        <div class="col-6">
+        </div>
+        <div class="col-6 d-flex justify-content-start">
+          <button class="btn btn-secondary" type="button">Send</button>
+          <button class="btn btn-secondary" type="submit" [disabled]="osobaForm.invalid">Send</button>
+          <button class="btn btn-secondary" type="reset">Reset</button>
+        </div>
+      </div>
+
     </div>
-    <div *ngIf="osobaForm.get('email').errors?.['email'] && osobaForm.get('email').dirty" [ngStyle]="{ color: 'red' }">
-      Zły adres email!
-    </div>
-    <div>
-      <textarea placeholder="Opis..." style="width: 240px;" type="text-area" formControlName="opis">
-      </textarea>
-    </div>
-    <div>
-      <label>Wiek </label>
-      <select formControlName="wiek" title="Wiek osoby" style="width: 177px;">
-        <option *ngFor="let item of wiek" [ngValue]="item">{{item}}</option>
-      </select>
-    </div>
-    <div>
-      <label>
-        <input formControlName="checkbox" type="checkbox" formControlName="czyStudent">Czy Student
-      </label>
-    </div>
-    <div class="form-check">
-      <label class="form-check-label" for="gender">Płeć? </label> <br> 
-      <input class="form-check-input" type="radio" [value]="true" formControlName="gender"> Mężczyzna 
-      <input class="form-check-input" type="radio" [value]="false" formControlName="gender"> Kobieta
-    </div>
-    <button type="submit">Send</button>
-    <button type="submit" [disabled]="osobaForm.invalid">Send</button>
-    <button type="reset">Reset</button>
+
+
   </form>
 </main>
